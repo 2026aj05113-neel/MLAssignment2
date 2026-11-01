@@ -1,3 +1,8 @@
+# Student Name: NEELKAMAL
+# Roll Number: 2026aj05113
+# File Name: train_models.py
+# Description: Preprocesses data, trains, evaluates, and saves five classifiers.
+
 """Train and evaluate the five classifiers required by the assignment."""
 
 from pathlib import Path
@@ -27,7 +32,8 @@ from sklearn.tree import DecisionTreeClassifier
 
 
 ROOT = Path(__file__).resolve().parent
-DATA_PATH = ROOT / "train_data.csv"
+DATA_PATH = ROOT / "full_dataset.csv"   # complete dataset (1,239 rows)
+TRAIN_PATH = ROOT / "train_split.csv"    # 50% used to train the models (619 rows)
 MODEL_DIR = ROOT / "model"
 TEST_PATH = ROOT / "test_data.csv"
 METRICS_PATH = ROOT / "metrics.json"
@@ -120,6 +126,10 @@ def main() -> None:
         }
         filename = name.lower().replace(" ", "_") + ".joblib"
         joblib.dump(pipeline, MODEL_DIR / filename)
+
+    train_data = X_train.copy()
+    train_data[TARGET] = y_train
+    train_data.to_csv(TRAIN_PATH, index=False)
 
     test_data = X_test.copy()
     test_data[TARGET] = y_test

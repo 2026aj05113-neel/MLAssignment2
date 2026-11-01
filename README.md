@@ -82,8 +82,9 @@ attention to weighted F1 and MCC rather than accuracy alone.
 - `train_models.py`: preprocessing, training, evaluation, and model saving.
 - `app.py`: Streamlit frontend with upload, model selection, metrics, confusion matrix, and classification report.
 - `requirements.txt`: deployment dependencies.
-- `train_data.csv`: source training data used for the experiment.
-- `test_data.csv`: held-out test data for the app.
+- `full_dataset.csv`: complete dataset (1,239 instances).
+- `train_split.csv`: 619 training instances (50% stratified split, random_state=42).
+- `test_data.csv`: 620 held-out test instances used by the app.
 - `model/`: saved pipelines for all five classifiers.
 
 ## Streamlit application features

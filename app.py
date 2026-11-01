@@ -1,3 +1,8 @@
+# Student Name: NEELKAMAL
+# Roll Number: 2026aj05113
+# File Name: app.py
+# Description: Streamlit app for evaluating the five saved classifiers.
+
 """Streamlit interface for evaluating the saved classification models."""
 
 from pathlib import Path
