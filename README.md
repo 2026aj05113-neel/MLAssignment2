@@ -119,7 +119,10 @@ using Streamlit Community Cloud.
 
 
 ## Streamlit application features
+- Loads the repository `test_data.csv` by default when the app opens.
 - CSV upload option for test data.
+- Click the current test filename to preview the CSV in the app.
+- Selecting another CSV replaces the current test data while keeping the upload control visible.
 - Automatic target-column detection from the uploaded CSV.
 - Model selection dropdown for all five saved models.
 - Accuracy, AUC, precision, recall, F1, and MCC results in table form.

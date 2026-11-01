@@ -24,6 +24,7 @@ from sklearn.metrics import (
 
 
 ROOT = Path(__file__).resolve().parent
+DEFAULT_TEST_PATH = ROOT / "test_data.csv"
 DEFAULT_TARGET = "Yield Category"
 STUDENT_NAME = "NEELKAMAL"
 ROLL_NUMBER = "2026aj05113"
@@ -54,9 +55,16 @@ def required_features(model: object) -> list[str]:
 
 def main() -> None:
     st.set_page_config(page_title="Machine Learning Assignment", layout="wide")
-    st.session_state.setdefault("uploaded_csv_bytes", None)
-    st.session_state.setdefault("uploaded_csv_name", None)
-    st.session_state.setdefault("upload_widget_version", 0)
+    if "uploaded_csv_bytes" not in st.session_state:
+        default_bytes = (
+            DEFAULT_TEST_PATH.read_bytes() if DEFAULT_TEST_PATH.exists() else None
+        )
+        st.session_state["uploaded_csv_bytes"] = default_bytes
+        st.session_state["uploaded_csv_name"] = (
+            "test_data.csv" if default_bytes is not None else None
+        )
+        st.session_state["uploaded_csv_is_default"] = default_bytes is not None
+    st.session_state.setdefault("uploaded_csv_is_default", False)
 
     st.title("Machine Learning Assignment")
     st.subheader("Classification model evaluation")
@@ -66,32 +74,39 @@ def main() -> None:
         "and review its evaluation results. The app does not retrain models."
     )
 
-    with st.container(horizontal=True, vertical_alignment="bottom"):
-        if st.session_state["uploaded_csv_bytes"] is None:
+    with st.container(horizontal=True, vertical_alignment="top"):
+        with st.container():
             uploaded = st.file_uploader(
                 "Upload test data only (CSV)",
                 type="csv",
                 accept_multiple_files=False,
-                key=f"csv_uploader_{st.session_state['upload_widget_version']}",
+                key="csv_uploader",
             )
             if uploaded is not None:
-                st.session_state["uploaded_csv_bytes"] = uploaded.getvalue()
-                st.session_state["uploaded_csv_name"] = uploaded.name
-                # Re-render without the uploader so the current file cannot be
-                # replaced until the user explicitly removes it.
-                st.rerun()
-        else:
-            st.write(f"Uploaded file: `{st.session_state['uploaded_csv_name']}`")
-            if st.button(
-                ":material/close:",
-                key="clear_uploaded_file",
-                help="Clear the uploaded file",
-                type="tertiary",
+                uploaded_bytes = uploaded.getvalue()
+                if (
+                    uploaded_bytes != st.session_state["uploaded_csv_bytes"]
+                    or uploaded.name != st.session_state["uploaded_csv_name"]
+                ):
+                    st.session_state["uploaded_csv_bytes"] = uploaded_bytes
+                    st.session_state["uploaded_csv_name"] = uploaded.name
+                    st.session_state["uploaded_csv_is_default"] = False
+            elif (
+                not st.session_state["uploaded_csv_is_default"]
+                and DEFAULT_TEST_PATH.exists()
             ):
-                st.session_state["uploaded_csv_bytes"] = None
-                st.session_state["uploaded_csv_name"] = None
-                st.session_state["upload_widget_version"] += 1
-                st.rerun()
+                st.session_state["uploaded_csv_bytes"] = DEFAULT_TEST_PATH.read_bytes()
+                st.session_state["uploaded_csv_name"] = "test_data.csv"
+                st.session_state["uploaded_csv_is_default"] = True
+
+            if st.session_state["uploaded_csv_bytes"] is not None:
+                with st.expander(
+                    f"Current test file: `{st.session_state['uploaded_csv_name']}`"
+                ):
+                    preview = pd.read_csv(
+                        BytesIO(st.session_state["uploaded_csv_bytes"])
+                    )
+                    st.dataframe(preview, height=300, width="stretch")
 
         model_name = st.selectbox("Select a model", list(MODEL_FILES))
 
