@@ -114,7 +114,8 @@ streamlit run app.py
 
 Deploy `app.py` from the `final_submission` branch of this GitHub repository
 using Streamlit Community Cloud.
-Add the live Streamlit URL here after deployment.
+
+[Live Streamlit application](https://mlassignment2-b87z8zvsxwyqgqfgkmgsaw.streamlit.app/)
 
 ## Submission checklist
 
@@ -126,7 +127,7 @@ Add the live Streamlit URL here after deployment.
 - [x] Streamlit app includes CSV upload and model selection.
 - [x] Streamlit app displays all required metrics.
 - [x] Streamlit app displays a confusion matrix and classification report.
-- [ ] GitHub repository URL added.
-- [ ] Streamlit Community Cloud URL added.
+- [x] GitHub repository URL added.
+- [x] Streamlit Community Cloud URL added.
 - [ ] BITS Virtual Lab screenshot added to the final submission PDF.
 - [ ] README content added to the final submission PDF.
