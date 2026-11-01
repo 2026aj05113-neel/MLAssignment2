@@ -74,6 +74,16 @@ attention to weighted F1 and MCC rather than accuracy alone.
 | Support Vector Machine | Strong performance with 0.7855 accuracy, 0.7866 F1, and 0.6796 MCC. |
 | Overall winner | KNN, because it achieved the strongest accuracy, AUC, F1, and MCC on the held-out test data. |
 
+
+
+
+
+
+
+
+
+
+
 ## Project files
 
 - `train_models.py`: preprocessing, training, evaluation, and model saving.
@@ -84,26 +94,6 @@ attention to weighted F1 and MCC rather than accuracy alone.
 - `test_data.csv`: 620 held-out test instances used by the app.
 - `model/`: saved pipelines for all five classifiers.
 
-## Streamlit application features
-
-- CSV upload option for test data.
-- Automatic target-column detection from the uploaded CSV.
-- Model selection dropdown for all five saved models.
-- Accuracy, AUC, precision, recall, F1, and MCC results in table form.
-- Confusion matrix and classification report.
-- No model retraining after test-data upload.
-
-The confusion matrix shows correct predictions on the diagonal and
-misclassifications outside the diagonal. The classification report shows
-precision, recall, F1 score, and support for each class.
-
-## Run locally
-
-```bash
-pip install -r requirements.txt
-python train_models.py
-streamlit run app.py
-```
 
 ## Deployment
 
@@ -124,5 +114,26 @@ using Streamlit Community Cloud.
 - [x] Streamlit app displays a confusion matrix and classification report.
 - [x] GitHub repository URL added.
 - [x] Streamlit Community Cloud URL added.
-- [ ] BITS Virtual Lab screenshot added to the final submission PDF.
-- [ ] README content added to the final submission PDF.
+- [x] BITS Virtual Lab screenshot added to the final submission PDF.
+- [x] README content added to the final submission PDF.
+
+
+## Streamlit application features
+- CSV upload option for test data.
+- Automatic target-column detection from the uploaded CSV.
+- Model selection dropdown for all five saved models.
+- Accuracy, AUC, precision, recall, F1, and MCC results in table form.
+- Confusion matrix and classification report.
+- No model retraining after test-data upload.
+
+The confusion matrix shows correct predictions on the diagonal and
+misclassifications outside the diagonal. The classification report shows
+precision, recall, F1 score, and support for each class.
+
+## Run locally
+
+```bash
+pip install -r requirements.txt
+python train_models.py
+streamlit run app.py
+```
