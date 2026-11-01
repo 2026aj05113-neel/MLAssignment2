@@ -18,15 +18,10 @@ column, `Yield Category`. The input data contains numeric agricultural,
 environmental, and production variables, plus the categorical `Area` field.
 The classes are nearly balanced: Low (414), High (413), and Medium (412).
 
-The CSV was supplied from a public Kaggle dataset. The source link provided for
+The CSV was supplied from a public Github repository. The source link provided for
 this project is:
-https://www.kaggle.com/datasets/umeradnaan/extinction-of-a-species-data
+https://github.com/MuhammadShahzaib-PK/Global-Crop-Yield-Forecasting/blob/main/Data/africa_full_panel.csv
 
-The URL should be checked before final submission because its title appears to
-refer to extinction data, while this project CSV contains agricultural yield
-data. The dataset source is credited; the preprocessing, model training,
-evaluation, application, and visual presentation were completed for this
-assignment.
 
 The data was split with stratification and `random_state=42`. Fifty percent
 was held out as `test_data.csv`, giving 619 training instances and 620 test
