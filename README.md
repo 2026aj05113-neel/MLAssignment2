@@ -37,7 +37,9 @@ standardized inside each saved pipeline.
 
 ## c. GitHub Repository Link
 
-Add the GitHub repository URL here after publishing the repository.
+[GitHub repository](https://github.com/2026aj05113-neel/MLAssignment2/tree/final_submission)
+
+Branch: `final_submission`
 
 ## d. Models used
 
@@ -110,7 +112,8 @@ streamlit run app.py
 
 ## Deployment
 
-Deploy `app.py` from this GitHub repository using Streamlit Community Cloud.
+Deploy `app.py` from the `final_submission` branch of this GitHub repository
+using Streamlit Community Cloud.
 Add the live Streamlit URL here after deployment.
 
 ## Submission checklist
