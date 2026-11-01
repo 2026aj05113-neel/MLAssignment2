@@ -5,6 +5,7 @@
 
 """Streamlit interface for evaluating the saved classification models."""
 
+from io import BytesIO
 from pathlib import Path
 
 import joblib
@@ -53,6 +54,10 @@ def required_features(model: object) -> list[str]:
 
 def main() -> None:
     st.set_page_config(page_title="Machine Learning Assignment", layout="wide")
+    st.session_state.setdefault("uploaded_csv_bytes", None)
+    st.session_state.setdefault("uploaded_csv_name", None)
+    st.session_state.setdefault("upload_widget_version", 0)
+
     st.title("Machine Learning Assignment")
     st.subheader("Classification model evaluation")
     st.markdown(f"**Student name:** {STUDENT_NAME}  \n**Roll number:** {ROLL_NUMBER}")
@@ -62,7 +67,32 @@ def main() -> None:
     )
 
     with st.container(horizontal=True, vertical_alignment="bottom"):
-        uploaded = st.file_uploader("Upload test data only (CSV)", type="csv")
+        if st.session_state["uploaded_csv_bytes"] is None:
+            uploaded = st.file_uploader(
+                "Upload test data only (CSV)",
+                type="csv",
+                accept_multiple_files=False,
+                key=f"csv_uploader_{st.session_state['upload_widget_version']}",
+            )
+            if uploaded is not None:
+                st.session_state["uploaded_csv_bytes"] = uploaded.getvalue()
+                st.session_state["uploaded_csv_name"] = uploaded.name
+                # Re-render without the uploader so the current file cannot be
+                # replaced until the user explicitly removes it.
+                st.rerun()
+        else:
+            st.write(f"Uploaded file: `{st.session_state['uploaded_csv_name']}`")
+            if st.button(
+                ":material/close:",
+                key="clear_uploaded_file",
+                help="Clear the uploaded file",
+                type="tertiary",
+            ):
+                st.session_state["uploaded_csv_bytes"] = None
+                st.session_state["uploaded_csv_name"] = None
+                st.session_state["upload_widget_version"] += 1
+                st.rerun()
+
         model_name = st.selectbox("Select a model", list(MODEL_FILES))
 
     st.caption(
@@ -72,11 +102,11 @@ def main() -> None:
         "saved models. The app loads the saved model and does not retrain on uploaded data."
     )
 
-    if uploaded is None:
+    if st.session_state["uploaded_csv_bytes"] is None:
         st.info("Upload test_data.csv to begin.")
         return
 
-    data = pd.read_csv(uploaded)
+    data = pd.read_csv(BytesIO(st.session_state["uploaded_csv_bytes"]))
     data.columns = data.columns.str.strip()
     if "Area" in data.columns:
         data["Area"] = data["Area"].astype("string").str.strip()
