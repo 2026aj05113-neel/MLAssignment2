@@ -68,7 +68,7 @@ def main() -> None:
 
     st.title("Machine Learning Assignment")
     st.subheader("Classification model evaluation")
-    st.markdown(f"**Student name:** {STUDENT_NAME}  \n**Roll number:** {ROLL_NUMBER}")
+    st.markdown(f"**Student name:** {STUDENT_NAME}  \n**BITS ID:** {ROLL_NUMBER}")
     st.write(
         "Upload the held-out test CSV, select one of five saved classifiers, "
         "and review its evaluation results. The app does not retrain models."
